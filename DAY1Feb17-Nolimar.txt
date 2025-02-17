@@ -122,7 +122,7 @@ ip dhcp pool VOICEVLAN
    default-router 10.62.100.4
    domain-name VOICEVLAN.COM
    dns-server 10.62.1.10
-   option 150 ip 10._.100.8   
+   option 150 ip 10.62.100.8   
    END
 
 !!CREATING AND PLACING PORTS INSIDEAVLAN:
@@ -465,9 +465,9 @@ route  add  200.0.0.0   mask  255.255.255.0   10._.1.4
 config t
 dial-peer voice 69 voip
  service rivanaa out-bound
- destination-pattern _69
- session target ipv4:10._.100.8
- incoming called-number _69
+ destination-pattern 6269
+ session target ipv4:10.62.100.8
+ incoming called-number 6269
  dtmf-relay h245-alphanumeric
  codec g711ulaw
  no vad
@@ -490,13 +490,13 @@ application
   param max-time-vm-retry 2
   param voice-mail 1234
   param max-time-call-retry 700
-  param aa-pilot _69
+  param aa-pilot 6269
  service rivanqueue flash:app-b-acd-3.0.0.2.tcl
   param queue-len 15
-  param aa-hunt1 _00
-  param aa-hunt2 _77
-  param aa-hunt3 _01
-  param aa-hunt4 _33
+  param aa-hunt1 6200
+  param aa-hunt2 6277
+  param aa-hunt3 6201
+  param aa-hunt4 6233
   param queue-manager-debugs 1
   param number-of-hunt-grps 4
 ****************************************************************************
@@ -529,7 +529,7 @@ OPEN CMD                 DNS
 INSTALL DNS - DOMAIN NAME SERVER/system
 
 OPEN CMD
-
+]
 Powershell
 Remove-WindowsFeature -name dns
 !
@@ -604,32 +604,32 @@ conf t
 !
  voice register global
   mode cme
-  source-address 10._.100.8 port 5060
+  source-address 10.62.100.8 port 5060
   max-dn 12
   max-pool 12
   authenticate register
   create profile sync
  voice register dn 1
-   number ____
+   number 6281
    allow watch
-   name _______
+   name 6281
  voice register dn 2
-   number ___
+   number 6282
    allow watch
-   name _______
+   name 6282
 !
   voice register pool 1
-    id mac ____.____.____
+    id mac 0cc6fd2fe5c4
     number 1 dn 1
     dtmf-relay sip-notify
-    username ____ password ____
+    username 6281 password 6281
     codec g711ulaw
 !
   voice register pool 2
-    id mac ____.____.____
+    id mac f8c3cc30314b
     number 1 dn 2
     dtmf-relay sip-notify
-    username ____ password ____
+    username 6282 password 6282
     codec g711ulaw
 !
 *******call other countries!!!********
